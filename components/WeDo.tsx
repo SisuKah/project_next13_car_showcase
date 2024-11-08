@@ -13,21 +13,22 @@ const WeDo = () => {
   };
 
   return (
-    <>      
+    <>
       {/* Main body content */}
-        <div className="flex flex-col md:flex-row bg-white shadow-md max-w-5xl w-full border">
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="flex flex-col md:flex-row bg-white shadow-md max-w-[1400px] w-full border gap-x-[150px]">
           <div className="flex-1">
             <Image
               src="/wedoCar.png"
               alt="Car Image"
               className="w-full h-full object-cover"
-              width={500} // Specify width and height for the image
-              height={500}
+              width={400} // Specify width and height for the image
+              height={400}
             />
           </div>
           <div className="flex-1 p-8 flex flex-col justify-center">
-            <h1 className="text-4xl font-bold mb-4">
-              MITÄ <br/><span className="text-red-500">TEEMME?</span>
+            <h1 className="mb-4 text-[50px] font-extrabold">
+              MITÄ <br /><span className="text-red-500">TEEMME?</span>
             </h1>
             <p className="text-gray-600 mb-6">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
@@ -42,6 +43,7 @@ const WeDo = () => {
             </a>
           </div>
         </div>
+      </div>
     </>
   );
 };
