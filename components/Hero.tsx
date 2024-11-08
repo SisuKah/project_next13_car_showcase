@@ -1,42 +1,30 @@
 "use client";
 
 import Image from "next/image";
-
 import { CustomButton } from "@components";
 
 const Hero = () => {
   const handleScroll = () => {
     const nextSection = document.getElementById("discover");
-
     if (nextSection) {
       nextSection.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   return (
-    <div className="hero">
-      <div className="flex-1 pt-36 padding-x">
-        <h1 className="hero__title">
-          Find, book, rent a car—quick and super easy!
+    <div className="relative h-screen w-full">
+      <Image 
+        src="/autohero.png" 
+        alt="hero" 
+        layout="fill" 
+        className="object-cover" 
+        priority
+      />
+      <div className="absolute inset-0 flex flex-col items-start justify-center">
+        <h1 className="absolute bottom-0 left-0 text-white text-[100px] font-extrabold p-[100px]">
+          LÄHDETÄÄN<br/><span className="text-red-theme">TIEN PÄÄLLE!</span> 
         </h1>
-
-        <p className="hero__subtitle">
-          Streamline your car rental experience with our effortless booking
-          process.
-        </p>
-
-        <CustomButton
-          title="Explore Cars"
-          containerStyles="bg-primary-blue text-white rounded-full mt-10"
-          handleClick={handleScroll}
-        />
-      </div>
-      <div className="hero__image-container">
-        <div className="hero__image">
-          <Image src="/hero.png" alt="hero" fill className="object-contain" />
-        </div>
-
-        <div className="hero__image-overlay" />
+        <CustomButton onClick={handleScroll} classname="bg-red-theme" />
       </div>
     </div>
   );

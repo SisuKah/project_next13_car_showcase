@@ -1,6 +1,6 @@
 import { fetchCars } from "@utils";
 import { HomeProps } from "@types";
-import { fuels, yearsOfProduction } from "@constants";
+import { fuels, yearsOfProduction, vaihteisto, tyyppi, korimalli } from "@constants";
 import { CarCard, ShowMore, SearchBar, CustomFilter, Hero } from "@components";
 
 export default async function Home({ searchParams }: HomeProps) {
@@ -21,7 +21,7 @@ export default async function Home({ searchParams }: HomeProps) {
       <div className='mt-12 padding-x padding-y max-width' id='discover'>
         <div className='home__text-container'>
           <h1 className='text-4xl font-extrabold'>Car Catalogue</h1>
-          <p>Explore out cars you might like</p>
+          <p>Etsi autoja joista pidät</p>
         </div>
 
         <div className='home__filters'>
@@ -30,6 +30,9 @@ export default async function Home({ searchParams }: HomeProps) {
           <div className='home__filter-container'>
             <CustomFilter title='fuel' options={fuels} />
             <CustomFilter title='year' options={yearsOfProduction} />
+            <CustomFilter title='vaihteisto' options={vaihteisto} />
+            <CustomFilter title='tyyppi' options={tyyppi} />
+            <CustomFilter title='korimalli' options={korimalli} />
           </div>
         </div>
 
