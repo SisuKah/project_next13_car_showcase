@@ -15,26 +15,29 @@ const WeDo = () => {
   return (
     <>
       {/* Main body content */}
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="flex flex-col md:flex-row bg-white shadow-md max-w-[1400px] w-full border gap-x-[150px]">
-          <div className="flex-1">
-            <Image
-              src="/wedoCar.png"
-              alt="Car Image"
-              className="w-full h-full object-cover"
-              width={500} // Specify width and height for the image
-              height={500}
-            />
+      <div className="flex justify-center items-center min-h-screen p-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 bg-white max-w-[1300px] w-full md:gap-[90px]">
+        <div className="flex">
+          <Image
+            src="/wedoCar.png"
+            alt="Car Image"
+            className="w-full h-auto sm:h-[600px] object-cover md:h-auto"
+            width={500}
+            height={500}
+            priority
+          />
+
           </div>
-          <div className="flex-1 p-8 justify-center items-start flex flex-col min-h-screen">
-          <h1 className="text-[50px] font-extrabold">
-            MITÄ <br/><span className="text-red-500">TEEMME?</span>
-          </h1>
-          <p className="mb-6 font-normal font-sans">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
-            commodo ligula eget dolor. Aenean massa. Cum sociis natoque
-            penatibus.
-          </p>
+          <div className="p-4 sm:p-6 md:p-8 flex flex-col justify-center items-start">
+            <h1 className="text-[36px] sm:text-[32px] md:text-[50px] font-bold font-sans leading-tight pb-4 sm:pb-6 md:pb-[50px]">
+              MITÄ <br />
+              <span className="text-red-500 font-sans">TEEMME?</span>
+            </h1>
+            <p className="mb-4 md:mb-6 font-medium text-black font-sans text-sm sm:text-base md:text-lg md:max-w-[400px] pb-[30px]">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
+              commodo ligula eget dolor. Aenean massa. Cum sociis natoque
+              penatibus.
+            </p>
             <AddCars />
           </div>
         </div>
