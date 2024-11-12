@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { CustomButton } from "@components";
+import AddCars from "./AddCars"; // Adjust this import path as needed
 
 const Hero = () => {
   const handleScroll = () => {
@@ -13,18 +14,47 @@ const Hero = () => {
 
   return (
     <div className="relative h-screen w-full">
-      <Image 
-        src="/autohero.png" 
-        alt="hero" 
-        layout="fill" 
-        className="object-cover" 
+      {/* Background Image */}
+      <Image
+        src="/autohero.png"
+        alt="hero"
+        layout="fill"
+        className="object-cover"
         priority
       />
-      <div className="absolute inset-0 flex flex-col items-start justify-center">
-        <h1 className="absolute bottom-0 left-0 text-white text-[100px] font-extrabold p-[100px]">
-          LÄHDETÄÄN<br/><span className="text-red-theme">TIEN PÄÄLLE!</span> 
+      
+      {/* Overlay for better contrast */}
+      <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col items-center justify-center px-8">
+        
+        {/* Logo at the top center */}
+        <div className="absolute top-40"> {/* Increased top to move the logo down */}
+          <Image 
+            src="/AutoLogo.png" 
+            alt="Auto Logo" 
+            width={150} 
+            height={50} 
+            className="object-contain"
+          />
+        </div>
+
+        {/* Heading with spacing and style */}
+        <h1 className="text-white text-6xl md:text-8xl font-extrabold leading-tight text-center mt-[200px]"> {/* Added margin-top to move text down */}
+          LÄHDETÄÄN<br />
+          <span className="text-red-theme">TIEN PÄÄLLE!</span>
         </h1>
-        <CustomButton onClick={handleScroll} classname="bg-red-theme" />
+
+        {/* Call to action button */}
+        <div className="mt-8">
+          <CustomButton 
+            onClick={handleScroll} 
+            classname="bg-red-theme text-white py-3 px-8 rounded-lg shadow-md hover:shadow-xl transition duration-300"
+          />
+        </div>
+
+        {/* Optional AddCars component */}
+        <div className="mt-8">
+          <AddCars />
+        </div>
       </div>
     </div>
   );

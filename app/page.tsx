@@ -58,7 +58,7 @@ export default async function Home({ searchParams }: HomeProps) {
       </div>
 
       <WeDo/>
-      {/* <Pricing/> */}
+      <Pricing/>
     </main>
   );
 }

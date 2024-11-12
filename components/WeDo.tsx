@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { AddCars, CustomButton } from "@components";
+import { AddCars } from "@components";
 import Head from "next/head"; // Import the Head component from Next.js
 
 const WeDo = () => {
@@ -15,25 +15,27 @@ const WeDo = () => {
   return (
     <>
       {/* Main body content */}
-      <div className="flex justify-center items-center min-h-screen p-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 bg-white max-w-[1300px] w-full md:gap-[90px]">
-        <div className="flex">
-          <Image
-            src="/wedoCar.png"
-            alt="Car Image"
-            className="w-full h-auto sm:h-[600px] object-cover md:h-auto"
-            width={500}
-            height={500}
-            priority
-          />
-
+      <div className="flex justify-center items-center px-4 sm:px-6 lg:px-8 py-8 bg-white">
+        <div className="flex flex-col md:flex-row md:max-w-[1500px] w-full gap-8 md:gap-12">
+          {/* Image Section */}
+          <div className="flex justify-center md:justify-start md:w-1/2">
+            <Image
+              src="/wedoCar.png"
+              alt="Car Image"
+              className="object-cover rounded-lg shadow-lg"
+              width={600}
+              height={600}
+              priority
+            />
           </div>
-          <div className="p-4 sm:p-6 md:p-8 flex flex-col justify-center items-start">
-            <h1 className="text-[36px] sm:text-[32px] md:text-[50px] font-bold font-sans leading-tight pb-4 sm:pb-6 md:pb-[50px]">
+
+          {/* Text Section */}
+          <div className="flex flex-col justify-center items-start md:w-1/2">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-6">
               MITÄ <br />
-              <span className="text-red-500 font-sans">TEEMME?</span>
+              <span className="text-red-500">TEEMME?</span>
             </h1>
-            <p className="mb-4 md:mb-6 font-medium text-black font-sans text-sm sm:text-base md:text-lg md:max-w-[400px] pb-[30px]">
+            <p className="mb-6 text-lg sm:text-xl md:text-2xl text-gray-700">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean
               commodo ligula eget dolor. Aenean massa. Cum sociis natoque
               penatibus.
