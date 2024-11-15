@@ -9,6 +9,7 @@ import Hero from "./Hero";
 import WeDo from "./WeDo";
 import Pricing from "./Pricing";
 import AddCars from "./AddCars";
+import CarGrid from "./CarGrid";
 
 export {
   Hero,
@@ -22,4 +23,5 @@ export {
   WeDo,
   Pricing,
   AddCars,
+  CarGrid,
 };
