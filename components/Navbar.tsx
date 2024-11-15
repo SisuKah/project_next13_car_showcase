@@ -47,8 +47,9 @@ const NavBar = () => {
         {user ? (
           <div className="flex items-center space-x-4">
             <Button 
-              title={"Lisää Auto"}
+              title="Lisää Auto"
               containerStyles="text-white rounded-full text-xl"
+              handleClick={() => router.push('/autot')} // Replace with your actual route
             />
             <CustomButton
               title="Kirjaudu ulos"

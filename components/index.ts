@@ -8,7 +8,7 @@ import SearchBar from "./Searchbar";
 import Hero from "./Hero";
 import WeDo from "./WeDo";
 import Pricing from "./Pricing";
-import AddCars from "./AddCars";
+import AddCars from "./AddCarsButton";
 import CarGrid from "./CarGrid";
 
 export {

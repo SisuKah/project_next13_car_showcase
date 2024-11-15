@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { CustomButton } from "@components";
-import AddCars from "./AddCars"; // Adjust this import path as needed
+import AddCars from "./AddCarsButton"; // Adjust this import path as needed
 
 const Hero = () => {
   const handleScroll = () => {
