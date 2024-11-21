@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { db, storage } from '../firebase';
+import { db, storage } from '../../firebase';
 import { manufacturers, yearsOfProduction, fuels, vaihteisto, tyyppi, korimalli } from '@constants/index';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';

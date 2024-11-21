@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
-import { app } from '../firebase'; // Ensure you have initialized Firebase in a separate file and imported it here.
+import { app } from '../../firebase'; // Ensure you have initialized Firebase in a separate file and imported it here.
 
 const Login = () => {
   const [email, setEmail] = useState('');

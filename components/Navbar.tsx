@@ -6,7 +6,7 @@ import CustomButton from "./CustomButton";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { app } from "../app/firebase"; // Ensure your Firebase app is initialized here
+import { app } from "../firebase"; // Ensure your Firebase app is initialized here
 import Button from "./CustomButton";
 
 const NavBar = () => {

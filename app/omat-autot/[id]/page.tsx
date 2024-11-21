@@ -1,6 +1,6 @@
 "use client";
 
-import { db } from '@app/firebase'; // Adjust this path if needed
+import { db } from '@firebase'; // Adjust this path if needed
 import React, { useEffect, useState } from 'react';
 import { doc, getDoc } from 'firebase/firestore';
 import { useParams } from 'next/navigation'; // Correct hook for dynamic route params in the App Router
