@@ -25,15 +25,20 @@ export default async function Home({ searchParams }: HomeProps) {
         </div>
 
         <div className='home__filters'>
-          <SearchBar />
+          {/* <SearchBar /> */}
 
-          <div className='home__filter-container'>
+          <div className='home__filter-container pb-10'>
             <CustomFilter title='fuel' options={fuels} />
             <CustomFilter title='year' options={yearsOfProduction} />
             <CustomFilter title='vaihteisto' options={vaihteisto} />
             <CustomFilter title='tyyppi' options={tyyppi} />
             <CustomFilter title='korimalli' options={korimalli} />
+            <button className="bg-[#ff4c4c] text-white font-semibold py-2 px-4 rounded-lg shadow hover:bg-[#e64545] transition duration-200 ease-in-out">
+              Suodata autoja
+            </button>
+
           </div>
+          
         </div>
 
         {/* Replace car section with a redirect component */}

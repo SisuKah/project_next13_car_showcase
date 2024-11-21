@@ -40,10 +40,10 @@ export const manufacturers = [
   "Toyota",
   "Volkswagen",
   "Volvo",
+  "Muu",
 ];
 
 export const yearsOfProduction = [
-  { title: "Vuosimalli", value: "" },
   { title: "1900", value: "1900" },
   { title: "1910", value: "1910" },
   { title: "1920", value: "1920" },
@@ -113,22 +113,19 @@ export const fuels = [
 
 ];
 
-export const vaihteisto = [
-  { title: "Tyyppi", value: "" },
+export const tyyppi = [
   { title: "Henkilöauto", value: "Henkilöauto" },
   { title: "Kevyt kuorma-auto", value: "Kevyt kuorma-auto" },
   { title: "Minibussi", value: "Minibussi" },
   { title: "Pakettiauto", value: "Pakettiauto" },
 
 ]
-export const tyyppi = [
-  { title: "Vaihteisto", value: "" },
+export const vaihteisto = [
   { title: "Automaatti", value: "Automaatti" },
   { title: "Manuaali", value: "Manuaali" },
 ]
 
 export const korimalli = [
-  { title: "Korimalli", value: "" },
   { title: "Avoauto", value: "Avoauto" },
   { title: "Avolava", value: "Avolava" },
   { title: "Coupé", value: "Coupé" },

@@ -75,10 +75,11 @@ const Login = () => {
           </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full bg-[#ff4c4c] text-white py-2 rounded hover:bg-[#ff4c4c] focus:outline-none focus:ring-2 focus:ring-[#ff4c4c]"
           >
             {isRegistering ? 'Rekisteröidy' : 'Kirjaudu sisään'}
           </button>
+
         </form>
         <p className="mt-4 text-center">
           {isRegistering ? 'Onko sinulla jo tili?' : 'Eikö sinulla ole vielä tiliä?'}

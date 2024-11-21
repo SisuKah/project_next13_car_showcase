@@ -11,7 +11,7 @@ import Button from "./CustomButton";
 
 const NavBar = () => {
   const router = useRouter();
-  const [user, setUser] = useState<{ email: string } | null>(null);
+  const [user, setUser] = useState<{ email: string | null } | null>(null);
   const auth = getAuth(app);
 
   useEffect(() => {
@@ -43,29 +43,40 @@ const NavBar = () => {
             AUTONETTI
           </div>
         </Link>
-
-        {user ? (
-          <div className="flex items-center space-x-4">
-            <Button 
-              title="Lisää Auto"
-              containerStyles="text-white rounded-full text-xl"
-              handleClick={() => router.push('/autot')} // Replace with your actual route
-            />
-            <CustomButton
-              title="Kirjaudu ulos"
-              btnType="button"
-              containerStyles="text-white rounded-full text-xl"
-              handleClick={handleLogout}
-            />
-          </div>
-        ) : (
-          <CustomButton
-            title="Kirjaudu"
-            btnType="button"
+        <div className="ml-auto flex items-center space-x-4">
+          <Button 
+            title="Yhteystiedot"
             containerStyles="text-white rounded-full text-xl"
-            handleClick={handleLoginClick}
+            handleClick={() => router.push('/your-route')} // Replace with your actual route
           />
-        )}
+          <Button 
+            title="Hinnasto"
+            containerStyles="text-white rounded-full text-xl"
+            handleClick={() => router.push('/your-route')} // Replace with your actual route
+          />
+          {user ? (
+            <>
+              <Button 
+                title="Lisää Auto"
+                containerStyles="text-white rounded-full text-xl"
+                handleClick={() => router.push('/lisaa-auto')} // Replace with your actual route
+              />
+              <CustomButton
+                title="Kirjaudu ulos"
+                btnType="button"
+                containerStyles="text-white rounded-full text-xl border-2 border-white"
+                handleClick={handleLogout}
+              />
+            </>
+          ) : (
+            <CustomButton
+              title="Kirjaudu"
+              btnType="button"
+              containerStyles="text-white rounded-full text-xl border-2 border-white"
+              handleClick={handleLoginClick}
+            />
+          )}
+        </div>
       </nav>
     </header>
   );
