@@ -1,6 +1,6 @@
 import { fetchCars } from "@utils";
 import { HomeProps } from "@types";
-import { fuels, yearsOfProduction, vaihteisto, tyyppi, korimalli } from "@constants";
+import { fuels, yearsOfProduction, vaihteisto, tyyppi, korimalli, hinta } from "@constants";
 import { SearchBar, CustomFilter, Hero, WeDo, Pricing, CarGrid } from "@components";
 
 export default async function Home({ searchParams }: HomeProps) {
@@ -24,22 +24,19 @@ export default async function Home({ searchParams }: HomeProps) {
           <p>Etsi autoja joista pidät</p>
         </div>
 
-        <div className='home__filters'>
-          {/* <SearchBar /> */}
+        <div className='home__filter-container pb-10'>
+          <CustomFilter title='fuel' options={fuels} />
+          <CustomFilter title='year' options={yearsOfProduction} />
+          <CustomFilter title='vaihteisto' options={vaihteisto} />
+          <CustomFilter title='tyyppi' options={tyyppi} />
+          <CustomFilter title='korimalli' options={korimalli} />
+          <CustomFilter title='Hinta' options={hinta} />
 
-          <div className='home__filter-container pb-10'>
-            <CustomFilter title='fuel' options={fuels} />
-            <CustomFilter title='year' options={yearsOfProduction} />
-            <CustomFilter title='vaihteisto' options={vaihteisto} />
-            <CustomFilter title='tyyppi' options={tyyppi} />
-            <CustomFilter title='korimalli' options={korimalli} />
-            <button className="bg-[#ff4c4c] text-white font-semibold py-2 px-4 rounded-lg shadow hover:bg-[#e64545] transition duration-200 ease-in-out">
-              Suodata autoja
-            </button>
-
-          </div>
-          
+          <button className="bg-[#ff4c4c] text-white font-semibold py-2 px-4 rounded-lg shadow hover:bg-[#e64545] transition duration-200 ease-in-out">
+            Suodata autoja
+          </button>
         </div>
+
 
         {/* Replace car section with a redirect component */}
         <CarGrid/>

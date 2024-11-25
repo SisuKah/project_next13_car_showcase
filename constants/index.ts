@@ -44,6 +44,7 @@ export const manufacturers = [
 ];
 
 export const yearsOfProduction = [
+  { title: "Vuosimalli", value: "" },
   { title: "1900", value: "1900" },
   { title: "1910", value: "1910" },
   { title: "1920", value: "1920" },
@@ -100,6 +101,21 @@ export const yearsOfProduction = [
   { title: "2025", value: "2025" },
 ];
 
+export const hinta = [
+  { title: "Hinta", value: "" },
+  { title: "100€ - 1 000€", value: "100-1000" },
+  { title: "1 001€ - 5 000€", value: "1001-5000" },
+  { title: "5 001€ - 10 000€", value: "5001-10000" },
+  { title: "10 001€ - 50 000€", value: "10001-50000" },
+  { title: "50 001€ - 100 000€", value: "50001-100000" },
+  { title: "100 001€ - 200 000€", value: "100001-200000" },
+  { title: "200 001€ - 300 000€", value: "200001-300000" },
+  { title: "300 001€ - 400 000€", value: "300001-400000" },
+  { title: "400 001€ - 500 000€", value: "400001-500000" },
+  { title: "500 000€+", value: "500000+" },
+];
+
+
 export const fuels = [
   {title: "Käyttövoima", value: "",},
   {title: "Bensiini", value: "Bensiini",},
@@ -114,6 +130,7 @@ export const fuels = [
 ];
 
 export const tyyppi = [
+  { title: "Auto tyyppi", value: "" },
   { title: "Henkilöauto", value: "Henkilöauto" },
   { title: "Kevyt kuorma-auto", value: "Kevyt kuorma-auto" },
   { title: "Minibussi", value: "Minibussi" },
@@ -121,11 +138,13 @@ export const tyyppi = [
 
 ]
 export const vaihteisto = [
+  { title: "Vaihteisto", value: "" },
   { title: "Automaatti", value: "Automaatti" },
   { title: "Manuaali", value: "Manuaali" },
 ]
 
 export const korimalli = [
+  { title: "Korimalli", value: "" },
   { title: "Avoauto", value: "Avoauto" },
   { title: "Avolava", value: "Avolava" },
   { title: "Coupé", value: "Coupé" },
