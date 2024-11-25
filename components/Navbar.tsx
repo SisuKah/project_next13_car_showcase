@@ -61,6 +61,11 @@ const NavBar = () => {
                 containerStyles="text-white rounded-full text-xl"
                 handleClick={() => router.push('/lisaa-auto')} // Replace with your actual route
               />
+              <Button 
+              title="Omat autot"
+              containerStyles="text-white rounded-full text-xl"
+              handleClick={() => router.push('/omat-autot')} // Replace with your actual route
+              />
               <CustomButton
                 title="Kirjaudu ulos"
                 btnType="button"

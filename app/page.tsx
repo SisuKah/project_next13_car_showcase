@@ -39,7 +39,7 @@ export default async function Home({ searchParams }: HomeProps) {
 
 
         {/* Replace car section with a redirect component */}
-        <CarGrid/>
+        <CarGrid cars={[]}/>
       </div>
 
       <WeDo />

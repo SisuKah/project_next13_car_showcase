@@ -2,7 +2,8 @@
 
 import { db } from '@firebase';
 import React, { useEffect, useState } from 'react';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 import Link from 'next/link';
 
 interface Car {
@@ -15,40 +16,46 @@ interface Car {
   vuosimalli_max?: number;
 }
 
-interface CarGridProps {
-  cars: Car[];
-}
-
-const CarGrid: React.FC<CarGridProps> = () => {
+const OwnCars = () => {
   const [cars, setCars] = useState<Car[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchCars = async () => {
+    const fetchOwnCars = async () => {
       setLoading(true);
 
       try {
-        const carCollection = collection(db, 'cars'); // Reference the 'cars' collection
-        const carSnapshot = await getDocs(carCollection); // Get all documents
-        const carList = carSnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setCars(carList); // Set the car data in state
+        const auth = getAuth();
+        const user = auth.currentUser;
+
+        if (user) {
+          const userEmail = user.email; // Get the logged-in user's email
+          const carCollection = collection(db, 'cars');
+          const q = query(carCollection, where('email', '==', userEmail)); // Filter cars by email
+          const carSnapshot = await getDocs(q);
+          const carList = carSnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          setCars(carList); // Set user's cars in state
+        } else {
+          console.error('No user is logged in.');
+          setCars([]);
+        }
       } catch (error) {
-        console.error('Error fetching cars:', error);
+        console.error('Error fetching own cars:', error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchCars();
+    fetchOwnCars();
   }, []);
 
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <p className="text-lg font-semibold">Loading cars...</p>
+        <p className="text-lg font-semibold">Loading your cars...</p>
       </div>
     );
   }
@@ -56,13 +63,13 @@ const CarGrid: React.FC<CarGridProps> = () => {
   if (cars.length === 0) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <p className="text-lg font-semibold">No cars available.</p>
+        <p className="text-lg font-semibold">You have no cars listed.</p>
       </div>
     );
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-[150px]">
       {cars.map((car) => (
         <Link key={car.id} href={`/autot/${car.id}`}>
           <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer">
@@ -85,4 +92,4 @@ const CarGrid: React.FC<CarGridProps> = () => {
   );
 };
 
-export default CarGrid;
+export default OwnCars;
