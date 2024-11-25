@@ -3,13 +3,15 @@
 import React, { useEffect, useState } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { db, storage } from '../../firebase';
-import { manufacturers, yearsOfProduction, fuels, vaihteisto, tyyppi, korimalli } from '@constants/index';
+import { manufacturers, fuels, vaihteisto, tyyppi, korimalli } from '@constants/index';
 import { collection, addDoc, Timestamp } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 const AddCarsForm = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userEmail, setUserEmail] = useState<string | null>(null);
+  const [imageInputs, setImageInputs] = useState([0]); // Start with one image input field for additional images
+  const [firstImageUrl, setFirstImageUrl] = useState<string | null>(null); // Store first image URL
 
   useEffect(() => {
     const auth = getAuth();
@@ -45,35 +47,65 @@ const AddCarsForm = () => {
       lisatiedot: formData.get('lisatiedot'),
       email: userEmail, // Add email to car data
       publishedDate: Timestamp.fromDate(new Date()), // Add the current date and time
+      imageUrl: firstImageUrl, // Store the first image URL
     };
 
-    // Handle image upload
-    const imageFile = formData.get('kuva');
-    let imageUrl = null;
-
-    if (imageFile) {
-      const imageRef = ref(storage, `cars/${(imageFile as File).name}-${Date.now()}`);
-      try {
-        const snapshot = await uploadBytes(imageRef, imageFile as Blob);
-        imageUrl = await getDownloadURL(snapshot.ref);
-      } catch (error) {
-        console.error("Error uploading image: ", error);
-        alert("Error uploading image. Please try again.");
-        return;
+    // Handle additional images (11 maximum)
+    let imageUrls = [];
+    for (let i = 1; i < imageInputs.length; i++) {
+      const imageFile = formData.get(`kuva_${i}`);
+      if (imageFile) {
+        const imageRef = ref(storage, `cars/${(imageFile as File).name}-${Date.now()}`);
+        try {
+          const snapshot = await uploadBytes(imageRef, imageFile as Blob);
+          const imageUrl = await getDownloadURL(snapshot.ref);
+          imageUrls.push(imageUrl);
+        } catch (error) {
+          console.error("Error uploading additional image: ", error);
+          alert("Error uploading additional image. Please try again.");
+          return;
+        }
       }
     }
 
     try {
-      // Add car data with image URL, email, and published date to Firestore
+      // Add car data with image URL and additional image URLs to Firestore
       await addDoc(collection(db, 'cars'), {
         ...carData,
-        imageUrl, // Include the uploaded image URL
-      });
+        imageUrls: imageUrls, // Store additional images in a separate field 'imageUrls'
+      });      
       alert("Car added successfully!");
       form.reset(); // Reset the form after successful submission
     } catch (error) {
       console.error("Error adding car: ", error);
       alert("Error adding car!");
+    }
+  };
+
+  const handleDeleteImageInput = (index: number) => {
+    setImageInputs((prev) => prev.filter((_, i) => i !== index)); // Remove the image input at the given index
+  };
+
+  const addImageInput = () => {
+    if (imageInputs.length < 12) {
+      setImageInputs((prev) => [...prev, prev.length]); // Add a new input field up to 12
+    } else {
+      alert("You can only add up to 12 images.");
+    }
+  };
+
+  const handleFirstImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const firstImageRef = ref(storage, `cars/${file.name}-${Date.now()}`);
+      try {
+        const snapshot = await uploadBytes(firstImageRef, file);
+        const imageUrl = await getDownloadURL(snapshot.ref);
+        setFirstImageUrl(imageUrl); // Set the first image URL
+      } catch (error) {
+        console.error("Error uploading first image: ", error);
+        alert("Error uploading first image. Please try again.");
+      }
     }
   };
 
@@ -180,25 +212,66 @@ const AddCarsForm = () => {
           className="w-full mb-4 p-2 border border-gray-300 rounded-lg"
         />
 
-         {/* Lisää kuva */}
-        <label className="block mb-2 text-sm font-medium text-gray-700">Lisää kuva</label>
-        <input
-          type="file"
-          name="kuva"
-          className="w-full mb-4 p-2 border border-gray-300 rounded-lg"
-          accept="image/*" // Accept only image files
-        />
+        {/* First image input */}
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">Lisää 1 kuva *</label>
+          <input
+            type="file"
+            name="kuva_0"
+            className="w-full p-2 border border-gray-300 rounded-lg"
+            accept="image/*"
+            onChange={handleFirstImageChange} // Handle first image upload
+            required
+          />
+          {firstImageUrl && (
+            <div className="mt-2">
+              <img src={firstImageUrl} alt="First Image" className="max-w-[200px] h-auto" />
+            </div>
+          )}
+        </div>
 
-        {/* Tekstikenttä */}
+        {/* Additional images inputs */}
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">Lisää enintään 11 muuta kuvaa</label>
+          {imageInputs.slice(1).map((_, index) => (
+            <div key={index} className="mb-2 flex items-center">
+              <input
+                type="file"
+                name={`kuva_${index + 1}`}
+                className="w-full p-2 border border-gray-300 rounded-lg"
+                accept="image/*"
+              />
+              <button
+                type="button"
+                onClick={() => handleDeleteImageInput(index + 1)} // Delete the input field
+                className="ml-2 text-red-500"
+              >
+                X
+              </button>
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={addImageInput}
+            className="text-blue-500 hover:underline"
+          >
+            Lisää toinen kuva (max 11)
+          </button>
+        </div>
+
+        {/* Lisätiedot */}
         <label className="block mb-2 text-sm font-medium text-gray-700">Lisätiedot</label>
         <textarea
           name="lisatiedot"
-          placeholder="Kirjoita lisätietoja..."
-          className="w-full mb-4 p-2 border border-gray-300 rounded-lg"
           rows={4}
-        ></textarea>
+          className="w-full p-2 border border-gray-300 rounded-lg mb-4"
+          placeholder="Kirjoita lisätiedot"
+        />
 
-        <button className="w-full p-2 bg-[#ff4c4c] text-white rounded-lg hover:bg-red-600">Lähetä</button>
+        {/* Submit button */}
+        <button className="w-full p-2 bg-[#ff4c4c] text-white rounded-lg hover:bg-red-600">
+          Lähetä
+        </button>
       </form>
     </div>
   );

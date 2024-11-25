@@ -7,7 +7,8 @@ import { useParams } from 'next/navigation'; // Correct hook for dynamic route p
 
 interface Car {
   id: string;
-  imageUrl?: string;
+  imageUrl?: string; // Single image URL
+  imageUrls?: string[]; // Array of additional image URLs
   model?: string;
   merkki?: string;
   hinta?: number;
@@ -27,6 +28,7 @@ const CarDetail = () => {
   const [car, setCar] = useState<Car | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [currentImage, setCurrentImage] = useState<string>(''); // Track the current displayed image
 
   const { id } = useParams() as { id: string }; // Use useParams to get the dynamic route parameter
 
@@ -38,7 +40,9 @@ const CarDetail = () => {
         const carDoc = doc(db, 'cars', id); // Reference the car by its ID
         const carSnapshot = await getDoc(carDoc);
         if (carSnapshot.exists()) {
-          setCar({ id: carSnapshot.id, ...carSnapshot.data() });
+          const carData = { id: carSnapshot.id, ...carSnapshot.data() } as Car;
+          setCar(carData);
+          setCurrentImage(carData.imageUrl || '/placeholder.jpg'); // Initialize with the main image
         } else {
           setError('Autoa ei löytynyt');
         }
@@ -76,23 +80,44 @@ const CarDetail = () => {
     );
   }
 
+  const handleImageClick = (imageUrl: string) => {
+    setCurrentImage(imageUrl); // Update the displayed image to the clicked one
+  };
+
+  // Merge the main image with the additional images
+  const images = car.imageUrl ? [car.imageUrl, ...(car.imageUrls || [])] : car.imageUrls || [];
+
   return (
     <div className="bg-gray-50 min-h-screen py-12 px-6 pt-[150px]">
       <div className="max-w-5xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
         <div className="relative">
-        <img
-          src={car.imageUrl || '/placeholder.jpg'}
-          alt={car.model || 'Auton kuva'}
-          className="w-full h-96 object-contain"
-        />
-          <div className="absolute top-0 left-0 w-full h-full bg-black opacity-25"></div>
+          {/* Display the current image */}
+          <img
+            src={currentImage || '/placeholder.jpg'}
+            alt={car.model || 'Auton kuva'}
+            className="w-full h-96 object-contain"
+          />
         </div>
-        
+
+        {/* Image Carousel - Show all images (including the first image) */}
+        {images.length > 0 && (
+          <div className="mt-4 flex justify-center space-x-2">
+            {images.map((image, index) => (
+              <img
+                key={index}
+                src={image}
+                alt={`Image ${index + 1}`}
+                className={`w-20 h-20 object-cover rounded-lg cursor-pointer ${image === currentImage ? 'border-4 border-blue-500' : ''}`}
+                onClick={() => handleImageClick(image)} // When a thumbnail is clicked, update the main image
+              />
+            ))}
+          </div>
+        )}
+
         <div className="p-8 space-y-6">
           <h2 className="text-3xl font-bold text-gray-800">{car.merkki || ''}</h2>
           <p className="text-lg font-semibold text-gray-600">{car.model || ''}</p>
           <p className="text-xl font-bold text-blue-600">{car.hinta ? `${car.hinta} €` : ''}</p>
-          
 
           {car.description && (
             <div className="mt-8">
