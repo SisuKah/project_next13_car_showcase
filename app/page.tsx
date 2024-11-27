@@ -20,11 +20,11 @@ export default async function Home({ searchParams }: HomeProps) {
 
       <div className='mt-12 padding-x padding-y max-width' id='discover'>
         <div className='home__text-container'>
-          <h1 className='text-4xl font-extrabold'>Car Catalogue</h1>
+          <h1 className='text-4xl font-extrabold'>Auto haku</h1>
           <p>Etsi autoja joista pidät</p>
         </div>
 
-        <div className='home__filter-container pb-10'>
+        {/* <div className='home__filter-container pb-10'>
           <CustomFilter title='fuel' options={fuels} />
           <CustomFilter title='year' options={yearsOfProduction} />
           <CustomFilter title='vaihteisto' options={vaihteisto} />
@@ -35,11 +35,11 @@ export default async function Home({ searchParams }: HomeProps) {
           <button className="bg-[#ff4c4c] text-white font-semibold py-2 px-4 rounded-lg shadow hover:bg-[#e64545] transition duration-200 ease-in-out">
             Suodata autoja
           </button>
-        </div>
+        </div> */}
 
 
         {/* Replace car section with a redirect component */}
-        <CarGrid cars={[]}/>
+        <CarGrid cars={allCars}/>
       </div>
 
       <WeDo />

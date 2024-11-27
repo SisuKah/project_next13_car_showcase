@@ -27,12 +27,12 @@ const AddCarsForm = () => {
     return () => unsubscribe(); // Clean up the subscription
   }, []);
 
-  const handleFormSubmit = async (e) => {
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const form = e.target;
+  
+    const form = e.target as HTMLFormElement; // Type assertion for the form element
     const formData = new FormData(form);
-
+  
     // Extract car data
     const carData = {
       tyyppi: formData.get('tyyppi'),
@@ -46,10 +46,10 @@ const AddCarsForm = () => {
       mittarilukema: formData.get('mittarilukema'),
       lisatiedot: formData.get('lisatiedot'),
       email: userEmail, // Add email to car data
-      publishedDate: Timestamp.fromDate(new Date()), // Add the current date and time
+      publishedAt: Timestamp.fromDate(new Date()), // Add the current date and time
       imageUrl: firstImageUrl, // Store the first image URL
     };
-
+  
     // Handle additional images (11 maximum)
     let imageUrls = [];
     for (let i = 1; i < imageInputs.length; i++) {
@@ -67,7 +67,7 @@ const AddCarsForm = () => {
         }
       }
     }
-
+  
     try {
       // Add car data with image URL and additional image URLs to Firestore
       await addDoc(collection(db, 'cars'), {
@@ -81,6 +81,8 @@ const AddCarsForm = () => {
       alert("Error adding car!");
     }
   };
+  
+  
 
   const handleDeleteImageInput = (index: number) => {
     setImageInputs((prev) => prev.filter((_, i) => i !== index)); // Remove the image input at the given index
@@ -123,14 +125,14 @@ const AddCarsForm = () => {
       <form id="add-car" onSubmit={handleFormSubmit}>
         {/* Merkki Dropdown */}
         <label className="block mb-2 text-sm font-medium text-gray-700">Merkki *</label>
-        <select name="merkki" className="w-full mb-4 p-2 border border-gray-300 rounded-lg" required>
-          <option value="">Valitse merkki</option>
-          {manufacturers.map((manufacturer) => (
-            <option key={manufacturer} value={manufacturer}>
-              {manufacturer}
-            </option>
-          ))}
-        </select>
+          <input
+            type="text"
+            name="merkki"
+            className="w-full mb-4 p-2 border border-gray-300 rounded-lg"
+            placeholder="Kirjoita merkki"
+            required
+          />
+
 
         {/* Korimalli Dropdown */}
         <label className="block mb-2 text-sm font-medium text-gray-700">Korimalli</label>
@@ -155,8 +157,8 @@ const AddCarsForm = () => {
         </select>
 
         {/* Vaihteisto Dropdown */}
-        <label className="block mb-2 text-sm font-medium text-gray-700">Vaihteisto</label>
-        <select name="vaihteisto" className="w-full mb-4 p-2 border border-gray-300 rounded-lg">
+        <label className="block mb-2 text-sm font-medium text-gray-700">Vaihteisto *</label>
+        <select name="vaihteisto" className="w-full mb-4 p-2 border border-gray-300 rounded-lg" required>
           <option value="">Valitse vaihteisto</option>
           {vaihteisto.map((option) => (
             <option key={option.value} value={option.value}>
@@ -177,19 +179,21 @@ const AddCarsForm = () => {
         </select>
 
         {/* Vuosimalli Input */}
-        <label className="block mb-2 text-sm font-medium text-gray-700">Vuosimalli</label>
+        <label className="block mb-2 text-sm font-medium text-gray-700">Vuosimalli *</label>
         <div className="flex space-x-2 mb-4">
           <input
             type="number"
             name="vuosimalli_min"
             placeholder="Minimi"
             className="w-1/2 p-2 border border-gray-300 rounded-lg"
+            required
           />
           <input
             type="number"
             name="vuosimalli_max"
             placeholder="Maksimi"
             className="w-1/2 p-2 border border-gray-300 rounded-lg"
+            required
           />
         </div>
 
